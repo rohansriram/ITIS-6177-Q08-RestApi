@@ -12,11 +12,11 @@ const { check, validationResult } = require('express-validator')
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
 
-const port = 3001;
+const port = 3000;
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
-
+const axios = require('axios');
 
 
 const options = {
@@ -27,7 +27,7 @@ const options = {
       description: 'Sample Api',
 
     },
-    host: '64.227.10.84:3001',
+    host: '64.227.10.84:3000',
     basePath: '/',
   },
   apis: ['./server.js'],
@@ -188,9 +188,9 @@ const pool = mariadb.createPool({
 //     res.send('index');
 // });
 
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/index.html");
-});
+// app.get("/", function (req, res) {
+//   res.sendFile(__dirname + "/index.html");
+// });
 
 
 app.get('/company', function (req, res) {
@@ -223,6 +223,14 @@ app.get('/company', function (req, res) {
 
 
 })
+
+app.get('/say', function(req, res){
+
+  axios.get('https://ogbvn1gmrc.execute-api.us-east-2.amazonaws.com/test/say?keyword=hello')
+  .then(response=>res.json(response.data))
+  .catch(err=> console.log(err));
+}
+)
 // app.get('/student', function (req, res) {
 
 //     //async function asyncFunction() {
