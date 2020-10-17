@@ -225,99 +225,19 @@ app.get('/company', function (req, res) {
 })
 
 app.get('/say', function(req, res){
+  if(req.query && req.query.keyword){
 
-  axios.get('https://ogbvn1gmrc.execute-api.us-east-2.amazonaws.com/test/say?keyword=hello')
+  axios.get('https://ogbvn1gmrc.execute-api.us-east-2.amazonaws.com/test/say?keyword='+[req.query.keyword])
+  
   .then(response=>res.json(response.data))
   .catch(err=> console.log(err));
+  console.log("param",req.query.keyword);
+  }
+  else
+  res.send('please enter the keyword');
 }
 )
-// app.get('/student', function (req, res) {
 
-//     //async function asyncFunction() {
-
-
-//         pool.getConnection()
-//     .then(conn => {
-
-//       conn.query("select * from student where Section='A'")
-//         .then((rows) => {
-//             res.setHeader("Content-Type", "application/json");
-//             res.json(rows);
-//              //[ {val: 1}, meta: ... ]
-
-
-//         })
-//         .catch(err => {
-//           //handle error
-//           console.log(err); 
-//           conn.end();
-//         })
-
-//     }).catch(err => {
-//       //not connected
-//     });
-
-
-
-// })
-// app.get('/customer/city', function (req, res) {
-
-//     //async function asyncFunction() {
-
-
-//         pool.getConnection()
-//     .then(conn => {
-
-//       conn.query("select * from customer where CUST_CITY = 'Bangalore'")
-//         .then((rows) => {
-//             res.setHeader("Content-Type", "application/json");
-//             res.json(rows);
-//              //[ {val: 1}, meta: ... ]
-
-
-//         })
-//         .catch(err => {
-//           //handle error
-//           console.log(err); 
-//           conn.end();
-//         })
-
-//     }).catch(err => {
-//       //not connected
-//     });
-
-
-
-// })
-// app.get('/food', function (req, res) {
-
-//     //async function asyncFunction() {
-
-
-//         pool.getConnection()
-//     .then(conn => {
-
-//       conn.query("select item_id, item_name from foods")
-//         .then((rows) => {
-//             res.setHeader("Content-Type", "application/json");
-//             res.json(rows);
-//              //[ {val: 1}, meta: ... ]
-
-
-//         })
-//         .catch(err => {
-//           //handle error
-//           console.log(err); 
-//           conn.end();
-//         })
-
-//     }).catch(err => {
-//       //not connected
-//     });
-
-
-
-// })
 
 app.post('/company', [
   check('req.body.cid').isLength({ max: 6 })
